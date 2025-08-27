@@ -1,0 +1,16 @@
+[project]
+name = "cookiecutter-python-template"
+version = "0.1.0"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "cookiecutter>=2.6.0",
+    "pip>=25.2",
+    "pytest>=8.4.1",
+    "ruff>=0.12.10",
+]
+
+[tool.uv]
+[[tool.uv.index]]
+name = "tsinghua"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple/"
