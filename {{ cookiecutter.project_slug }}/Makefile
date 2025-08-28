@@ -6,6 +6,6 @@ format:
 lint:
 	uv run ruff check .
 install:
-	uv sync
+	uv sync && git init
 test:
 	uv run pytest -v tests/
