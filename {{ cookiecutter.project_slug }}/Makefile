@@ -4,7 +4,7 @@ format:
 	# 格式化
 	uv run ruff format .
 lint:
-	uv run ruff check .
+	uv run ruff check --fix .
 install:
 	uv sync && git init
 test:
