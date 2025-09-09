@@ -2,5 +2,6 @@
     "code-runner.executorMap": {
         "python": ".vscode/run_module.sh"
     },
-    "code-runner.clearPreviousOutput": true
+    "code-runner.clearPreviousOutput": true,
+    "code-runner.runInTerminal": true
 }
