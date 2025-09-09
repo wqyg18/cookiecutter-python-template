@@ -2,11 +2,8 @@ import os
 import subprocess
 from pathlib import Path
 
-import pytest
-
 # 导入共享的fixture
 from test_cookiecutter import generated_project
-
 
 def run(cmd, cwd=None):
     """简单封装的 subprocess.run，抛出失败即异常"""
@@ -26,13 +23,13 @@ def test_make_format(generated_project: Path):
     original_cwd = os.getcwd()
     try:
         os.chdir(generated_project)
-        
+
         # 执行make format命令
         result = run(["make", "format"])
-        
+
         # 验证命令执行成功
         assert result.returncode == 0
-        
+
     finally:
         os.chdir(original_cwd)
 
@@ -43,13 +40,13 @@ def test_make_lint(generated_project: Path):
     original_cwd = os.getcwd()
     try:
         os.chdir(generated_project)
-        
+
         # 执行make lint命令
         result = run(["make", "lint"])
-        
+
         # 验证命令执行成功
         assert result.returncode == 0
-        
+
     finally:
         os.chdir(original_cwd)
 
@@ -60,22 +57,22 @@ def test_make_install(generated_project: Path):
     original_cwd = os.getcwd()
     try:
         os.chdir(generated_project)
-        
+
         # 执行make install命令
         result = run(["make", "install"])
-        
+
         # 验证命令执行成功
         assert result.returncode == 0
-        
+
         # 验证输出中包含自定义包的安装信息
         output = result.stdout + result.stderr
         # 检查包是否被正确安装（处理不同的输出格式）
         # 有时uv sync会显示详细的安装信息，有时只会审计
         assert "cookiecutterdebugpackage" in output or "Audited" in output
-        
+
         # 验证虚拟环境目录存在
         assert (generated_project / ".venv").is_dir()
-        
+
     finally:
         os.chdir(original_cwd)
 
@@ -86,12 +83,12 @@ def test_make_test(generated_project: Path):
     original_cwd = os.getcwd()
     try:
         os.chdir(generated_project)
-        
+
         # 执行make test命令
         result = run(["make", "test"])
-        
+
         # 验证命令执行成功
         assert result.returncode == 0
-        
+
     finally:
         os.chdir(original_cwd)
