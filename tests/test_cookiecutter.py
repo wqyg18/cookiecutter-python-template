@@ -1,4 +1,3 @@
-import os
 import shutil
 import subprocess
 import tempfile
@@ -15,12 +14,12 @@ GEN_FOLDER = "cookiecutter_debug_project_slug"
 # 调试用 cookiecutter 配置（直接内联，避免外部文件依赖）
 DEBUG_CONFIG = {
     "project_name": "cookiecutter_debug_project",
-    "project_slug": "cookiecutter_debug_project_slug", 
+    "project_slug": "cookiecutter_debug_project_slug",
     "package_name": "cookiecutterdebugpackage",
     "project_description": "DEBUG_CONFIG: Temporary project for template debugging",
     "author_name": "cookiecutter_debug_user",
     "author_email": "debug@cookiecutter.example.com",
-    "version": "0.0.0"
+    "version": "0.0.0",
 }
 
 
@@ -46,14 +45,13 @@ def generated_project():
     tmp_dir = tempfile.mkdtemp(prefix="cookiecutter_test_")
     try:
         # 创建用户配置文件（使用内联配置）
-        user_config = {
-            "default_context": DEBUG_CONFIG
-        }
-        
+        user_config = {"default_context": DEBUG_CONFIG}
+
         import json
+
         config_file = Path(tmp_dir) / "user_config.json"
         config_file.write_text(json.dumps(user_config))
-        
+
         # 1. 生成项目
         run(
             [
@@ -99,7 +97,7 @@ def test_generated_project_health(generated_project: Path):
     assert (generated_project / "README.md").exists()
     assert (generated_project / "main.py").exists()
     assert (generated_project / "cookiecutterdebugpackage" / "__init__.py").exists()
-    
+
     # 检查包目录结构
     assert (generated_project / "utils").is_dir()
     assert (generated_project / "scripts").is_dir()
