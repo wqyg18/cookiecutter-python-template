@@ -6,6 +6,6 @@ format:
 lint:
 	uv run ruff check --fix .
 install:
-	uv sync && git init
+	uv sync && git init && cp .vscode/settings.json.example .vscode/settings.json
 test:
 	uv run pytest -v tests/
