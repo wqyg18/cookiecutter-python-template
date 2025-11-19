@@ -1,9 +1,11 @@
 import os
 import subprocess
+import platform
 from pathlib import Path
 
+IS_WINDOWS = platform.system() == "Windows"
+
 # 导入共享的fixture
-from test_cookiecutter import generated_project
 
 def run(cmd, cwd=None):
     """简单封装的 subprocess.run，抛出失败即异常"""
@@ -13,6 +15,7 @@ def run(cmd, cwd=None):
         cwd=cwd,
         check=True,
         text=True,
+        encoding="utf-8",
         capture_output=True,
     )
 
@@ -25,7 +28,8 @@ def test_make_format(generated_project: Path):
         os.chdir(generated_project)
 
         # 执行make format命令
-        result = run(["make", "format"])
+        cmd = ["powershell", "-ExecutionPolicy", "Bypass", "-File", "manage.ps1", "format"] if IS_WINDOWS else ["make", "format"]
+        result = run(cmd)
 
         # 验证命令执行成功
         assert result.returncode == 0
@@ -42,7 +46,8 @@ def test_make_lint(generated_project: Path):
         os.chdir(generated_project)
 
         # 执行make lint命令
-        result = run(["make", "lint"])
+        cmd = ["powershell", "-ExecutionPolicy", "Bypass", "-File", "manage.ps1", "lint"] if IS_WINDOWS else ["make", "lint"]
+        result = run(cmd)
 
         # 验证命令执行成功
         assert result.returncode == 0
@@ -59,7 +64,8 @@ def test_make_install(generated_project: Path):
         os.chdir(generated_project)
 
         # 执行make install命令
-        result = run(["make", "install"])
+        cmd = ["powershell", "-ExecutionPolicy", "Bypass", "-File", "manage.ps1", "install"] if IS_WINDOWS else ["make", "install"]
+        result = run(cmd)
 
         # 验证命令执行成功
         assert result.returncode == 0
@@ -85,7 +91,8 @@ def test_make_test(generated_project: Path):
         os.chdir(generated_project)
 
         # 执行make test命令
-        result = run(["make", "test"])
+        cmd = ["powershell", "-ExecutionPolicy", "Bypass", "-File", "manage.ps1", "test"] if IS_WINDOWS else ["make", "test"]
+        result = run(cmd)
 
         # 验证命令执行成功
         assert result.returncode == 0
